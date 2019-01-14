@@ -1,6 +1,7 @@
 # encoding=utf8
 import os
 import logging
+import logging.handlers
 from telegram.ext import CommandHandler
 from telegram.ext import Updater
 import pygiphy
@@ -31,9 +32,17 @@ def tempo(bot,update):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                        level=logging.INFO)
+    LOG_FILENAME = 'pybot.out'
+    
+    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     logger = logging.getLogger('pybot')
+
+    handler = logging.handlers.RotatingFileHandler(LOG_FILENAME, maxBytes=10737418240, backupCount=10)
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+
+    
+    logger.setLevel(logging.DEBUG)
     logger.info("Iniciando PyBot")
 
     updater = Updater(token=os.environ['BOT_API_TOKEN'])

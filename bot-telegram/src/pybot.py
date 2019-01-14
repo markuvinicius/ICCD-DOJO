@@ -7,6 +7,7 @@ from telegram.ext import Updater
 import pygiphy
 
 
+
 def start(bot, update):
     logger.info('start')
     bot.send_message(chat_id=update.message.chat_id, text="I'm a bot, please talk to me!")
@@ -32,7 +33,7 @@ def tempo(bot,update):
 
 
 if __name__ == "__main__":
-    LOG_FILENAME = 'pybot.out'
+    LOG_FILENAME = '../pybot.log'
     
     formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     logger = logging.getLogger('pybot')

@@ -1,0 +1,3 @@
+bot-telegram/src/__pycache__/
+bot-telegram/src/__pycache__/*
+*.pyc

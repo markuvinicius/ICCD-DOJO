@@ -34,3 +34,9 @@ Para a execução do programa, são necessárias dois tokens de API para a comun
 * Navegue para a pasta `src`
 * Na linha de comando, digite `python3 pybot.py`
 
+## Teste
+Com o programa em execução, adicione o bot ao seus contatos no Telegram, e envie comandos nas rotas existentes:
+
+* /start        : Devolve uma saudação do bot
+* /gif <texto>  : Devolve um gif relacionado com o texto buscado
+

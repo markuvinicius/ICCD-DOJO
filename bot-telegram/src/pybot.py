@@ -10,17 +10,17 @@ import pygiphy
 
 def start(bot, update):
     logger.info('start')
-    bot.send_message(chat_id=update.message.chat_id, text="I'm a bot, please talk to me!")
+    bot.send_message(chat_id=update.message.chat_id, text="Tô aqui, amigão. Pode falar....")
 
-def gif(bot, update):
-    logger.info('gif')
-    logger.info(update['message']['text'])
-    query = pygiphy.get_query_string(update['message']['text'], pygiphy.get_token())
-    logger.info(query)
+def gif(bot, update):    
+    logger.info("mensagem: " + update['message']['text'])
+    query = pygiphy.get_query_string(update['message']['text'], pygiphy.get_token())    
     call = pygiphy.get_giphy_endpoint(query)
-    animation = pygiphy.get_gif(call)
-    logger.info(pygiphy.get_gif(call))
-    bot.send_animation(update.message.chat_id, animation, disable_notification=False, timeout=20)
+    animation = pygiphy.get_gif(call)    
+    if animation is not None:
+        bot.send_animation(update.message.chat_id, animation, disable_notification=False, timeout=20)
+    else:
+        bot.send_message(chat_id=update.message.chat_id, text="Foi mal aí, amigão. Não achei nenhum gif com essa frase bosta. Tenta outra :)")    
 
     
 def foaas(bot,update):

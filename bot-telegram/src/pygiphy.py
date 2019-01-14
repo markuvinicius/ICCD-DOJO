@@ -16,8 +16,11 @@ def get_giphy_endpoint(query_string):
     return 'http://api.giphy.com/v1/gifs/search?'+ query_string
 
 def get_gif(api_end_point):
-    r = requests.get(api_end_point).json()
-    return r['data'][0]['images']['original']['url']
+    r = requests.get(api_end_point).json()    
+    if len(r['data']) > 0:        
+        return r['data'][0]['images']['original']['url']
+    else:
+        return None
 
 
 # Classe de teste

@@ -7,7 +7,7 @@ from urllib.parse import urlencode
 from urllib.request import urlopen
 
 def get_token():
-    return "Ht4X4mMzltLWw8oKl5VQMm7tpJbykB8X"
+    return os.environ['GIPHY_API_TOKEN']
 
 def get_query_string(search, token):
     return urlencode({'q': search.replace('/gif ', ''),'api_key':token, 'limit': 1})

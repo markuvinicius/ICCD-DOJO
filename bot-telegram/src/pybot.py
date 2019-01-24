@@ -29,14 +29,11 @@ def foaas(bot, update):
 
 def tempo(bot, update):
     token = weather.get_token()
-    print('Token - ' + token)
     query = weather.get_query_string(token)
-    print('Query - ' + query)
     call = weather.get_endpoint(query)
-    print('Endpoint - ' + call)
     message = weather.get_by_days(call)
     bot.send_message(chat_id=update.message.chat_id, text=message)
-    logger.info(token)
+    logger.info(message)
 
 
 if __name__ == "__main__":

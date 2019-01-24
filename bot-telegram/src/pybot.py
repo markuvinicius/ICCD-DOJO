@@ -1,16 +1,16 @@
 # encoding=utf8
 import os
-import logging
 import logging.handlers
 from telegram.ext import CommandHandler
 from telegram.ext import Updater
 import pygiphy
-
+import weather
 
 
 def start(bot, update):
     logger.info('start')
     bot.send_message(chat_id=update.message.chat_id, text="Tô aqui, amigão. Pode falar....")
+
 
 def gif(bot, update):    
     logger.info("mensagem: " + update['message']['text'])
@@ -20,16 +20,23 @@ def gif(bot, update):
     if animation is not None:
         bot.send_animation(update.message.chat_id, animation, disable_notification=False, timeout=20)
     else:
-        bot.send_message(chat_id=update.message.chat_id, text="Foi mal aí, amigão. Não achei nenhum gif com essa frase bosta. Tenta outra :)")    
+        bot.send_message(chat_id=update.message.chat_id, text="Foi mal aí, amigão. Não achei nenhum gif com essa frase bosta. Tenta outra :)")
 
     
-def foaas(bot,update):
+def foaas(bot, update):
     logger.info('foaas - http://www.foaas.com/')
 
-def tempo(bot,update):
-    logger.info('tempo - https://openweathermap.org/current')
 
-
+def tempo(bot, update):
+    token = weather.get_token()
+    print('Token - ' + token)
+    query = weather.get_query_string(token)
+    print('Query - ' + query)
+    call = weather.get_endpoint(query)
+    print('Endpoint - ' + call)
+    message = weather.get_by_days(call)
+    bot.send_message(chat_id=update.message.chat_id, text=message)
+    logger.info(token)
 
 
 if __name__ == "__main__":
@@ -42,7 +49,6 @@ if __name__ == "__main__":
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
-    
     logger.setLevel(logging.DEBUG)
     logger.info("Iniciando PyBot")
 
@@ -50,11 +56,9 @@ if __name__ == "__main__":
     dispatcher = updater.dispatcher
 
     start_handler = CommandHandler('start', start)
-    gif_handler   = CommandHandler('gif', gif)
+    gif_handler = CommandHandler('gif', gif)
     foaas_handler = CommandHandler('foaas', foaas)
     tempo_handler = CommandHandler('tempo', tempo)
-
-    
 
     try:
         dispatcher.add_handler(start_handler)

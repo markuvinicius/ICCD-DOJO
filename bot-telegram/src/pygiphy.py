@@ -3,14 +3,14 @@ import unittest
 import validators
 import requests
 from urllib.parse import urlencode
-
+from random import choice
 
 def get_token():
     return os.environ['GIPHY_API_TOKEN']
 
 
 def get_query_string(search, token):
-    return urlencode({'q': search.replace('/gif ', ''), 'api_key': token, 'limit': 1})
+    return urlencode({'q': search.replace('/gif ', ''), 'api_key': token})
 
 
 def get_giphy_endpoint(query_string):
@@ -19,8 +19,9 @@ def get_giphy_endpoint(query_string):
 
 def get_gif(api_end_point):
     r = requests.get(api_end_point).json()    
-    if len(r['data']) > 0:        
-        return r['data'][0]['images']['original']['url']
+    if len(r['data']) > 0:              
+        image = choice(r['data'])
+        return image['images']['original']['url']
     else:
         return None
 

@@ -4,8 +4,7 @@ import logging.handlers
 from telegram.ext import CommandHandler
 from telegram.ext import Updater
 import pygiphy
-import weather
-
+import pyweather
 
 def start(bot, update):
     logger.info('start')
@@ -26,15 +25,23 @@ def gif(bot, update):
 def foaas(bot, update):
     logger.info('foaas - http://www.foaas.com/')
 
-
-def tempo(bot, update):
-    token = weather.get_token()
-    query = weather.get_query_string(token)
-    call = weather.get_endpoint(query)
-    message = weather.get_by_days(call)
-    bot.send_message(chat_id=update.message.chat_id, text=message)
-    logger.info(message)
-
+def tempo(bot, update):    
+    logger.info(update['message']['text'].strip())
+    text_array = update['message']['text'].strip().split('-')     
+    if len(text_array) == 2:  
+        city_name = text_array[0].replace('/tempo ','')
+        state     = text_array[1]                        
+        locale    = pyweather.get_locale(city_name, state)                        
+        if locale is not None:
+            weather,icon = pyweather.get_current_weather_by_locale_id( locale )        
+            print(icon)
+            f = open('../icons/realistic/200px/'+icon+'.png', "rb")            
+            bot.send_photo(chat_id=update.message.chat_id,
+                            photo=f,
+                            caption=weather)
+        else:
+            weather = 'Cidade não encontrada'  
+            bot.send_message(chat_id=update.message.chat_id, text=weather)
 
 if __name__ == "__main__":
     LOG_FILENAME = '../pybot.log'
@@ -57,12 +64,12 @@ if __name__ == "__main__":
     foaas_handler = CommandHandler('foaas', foaas)
     tempo_handler = CommandHandler('tempo', tempo)
 
-    try:
-        dispatcher.add_handler(start_handler)
-        dispatcher.add_handler(gif_handler)
-        dispatcher.add_handler(foaas_handler)
-        dispatcher.add_handler(tempo_handler)
+    #try:
+    dispatcher.add_handler(start_handler)
+    dispatcher.add_handler(gif_handler)
+    dispatcher.add_handler(foaas_handler)
+    dispatcher.add_handler(tempo_handler)
 
-        updater.start_polling()
-    except KeyboardInterrupt as e:
-        logger.info("saindo")
+    updater.start_polling()
+    #except KeyboardInterrupt as e:
+    #    logger.info("saindo")

@@ -33,8 +33,7 @@ def tempo(bot, update):
         state     = text_array[1]                        
         locale    = pyweather.get_locale(city_name, state)                        
         if locale is not None:
-            weather,icon = pyweather.get_current_weather_by_locale_id( locale )        
-            print(icon)
+            weather,icon = pyweather.get_current_weather_by_locale_id( locale )                    
             f = open('../icons/realistic/200px/'+icon+'.png', "rb")            
             bot.send_photo(chat_id=update.message.chat_id,
                             photo=f,
@@ -64,12 +63,12 @@ if __name__ == "__main__":
     foaas_handler = CommandHandler('foaas', foaas)
     tempo_handler = CommandHandler('tempo', tempo)
 
-    #try:
-    dispatcher.add_handler(start_handler)
-    dispatcher.add_handler(gif_handler)
-    dispatcher.add_handler(foaas_handler)
-    dispatcher.add_handler(tempo_handler)
+    try:
+        dispatcher.add_handler(start_handler)
+        dispatcher.add_handler(gif_handler)
+        dispatcher.add_handler(foaas_handler)
+        dispatcher.add_handler(tempo_handler)
 
-    updater.start_polling()
-    #except KeyboardInterrupt as e:
-    #    logger.info("saindo")
+        updater.start_polling()
+    except KeyboardInterrupt as e:
+        logger.info("saindo")

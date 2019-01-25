@@ -4,3 +4,4 @@ bot-telegram/src/__pycache__/*
 *.out
 *.gz
 *.log
+/.idea/

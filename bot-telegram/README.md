@@ -29,6 +29,7 @@ Para a execução do programa, são necessárias dois tokens de API para a comun
 
 * `export GIPHY_API_TOKEN="seu_token_giphy"`
 
+* `export CLIMA_API_TOKEN="seu_token_clima_tempo"`
 
 ## Execução
 * Navegue para a pasta `src`
@@ -39,4 +40,5 @@ Com o programa em execução, adicione o bot ao seus contatos no Telegram, e env
 
 * /start        : Devolve uma saudação do bot
 * /gif <texto>  : Devolve um gif relacionado com o texto buscado
+* /tempo        : Devolve a previsão do tempo resumida para o dia de SP (Beta)
 
